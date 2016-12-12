@@ -1,0 +1,100 @@
+,business_id,year,month,count_tips,user_stars,count_reviews,attributes_Price Range,name,total_reviews,stars_current,broad_categories
+0,--0ZoBTQWQra1FxD4rBWmg,2014,03,1.0,0.0,0.0,0.0,Bourquin Residential Group,4,2.0,Others
+1,--0ZoBTQWQra1FxD4rBWmg,2015,10,1.0,1.0,1.0,0.0,Bourquin Residential Group,4,2.0,Others
+2,--0ZoBTQWQra1FxD4rBWmg,2014,12,0.0,1.0,1.0,0.0,Bourquin Residential Group,4,2.0,Others
+3,--0ZoBTQWQra1FxD4rBWmg,2016,01,0.0,3.0,2.0,0.0,Bourquin Residential Group,4,2.0,Others
+4,--1emggGHgoG6ipd_RMb-g,2013,06,1.0,5.0,1.0,1.0,Sinclair,4,4.0,Eateries
+5,--1emggGHgoG6ipd_RMb-g,2013,09,1.0,0.0,0.0,1.0,Sinclair,4,4.0,Eateries
+6,--1emggGHgoG6ipd_RMb-g,2014,02,1.0,0.0,0.0,1.0,Sinclair,4,4.0,Eateries
+7,--1emggGHgoG6ipd_RMb-g,2014,04,1.0,0.0,0.0,1.0,Sinclair,4,4.0,Eateries
+8,--1emggGHgoG6ipd_RMb-g,2014,06,1.0,4.0,1.0,1.0,Sinclair,4,4.0,Eateries
+9,--1emggGHgoG6ipd_RMb-g,2014,07,1.0,0.0,0.0,1.0,Sinclair,4,4.0,Eateries
+10,--1emggGHgoG6ipd_RMb-g,2014,10,1.0,0.0,0.0,1.0,Sinclair,4,4.0,Eateries
+11,--1emggGHgoG6ipd_RMb-g,2013,10,0.0,1.0,1.0,1.0,Sinclair,4,4.0,Eateries
+12,--4Pe8BZ6gj57VFL5mUE8g,2014,07,1.0,5.0,1.0,3.0,Office Max,9,3.0,Lifestyle & Entertainment
+13,--4Pe8BZ6gj57VFL5mUE8g,2016,06,1.0,2.0,1.0,3.0,Office Max,9,3.0,Lifestyle & Entertainment
+14,--4Pe8BZ6gj57VFL5mUE8g,2009,01,0.0,1.0,1.0,3.0,Office Max,9,3.0,Lifestyle & Entertainment
+15,--4Pe8BZ6gj57VFL5mUE8g,2011,04,0.0,2.0,1.0,3.0,Office Max,9,3.0,Lifestyle & Entertainment
+16,--4Pe8BZ6gj57VFL5mUE8g,2013,08,0.0,1.0,1.0,3.0,Office Max,9,3.0,Lifestyle & Entertainment
+17,--4Pe8BZ6gj57VFL5mUE8g,2013,12,0.0,5.0,1.0,3.0,Office Max,9,3.0,Lifestyle & Entertainment
+18,--4Pe8BZ6gj57VFL5mUE8g,2015,06,0.0,1.0,1.0,3.0,Office Max,9,3.0,Lifestyle & Entertainment
+19,--4Pe8BZ6gj57VFL5mUE8g,2015,07,0.0,5.0,1.0,3.0,Office Max,9,3.0,Lifestyle & Entertainment
+20,--5jkZ3-nUPZxUvtcbr8Uw,2011,09,2.0,0.0,0.0,1.0,Mika's Greek,127,4.5,Eateries
+21,--5jkZ3-nUPZxUvtcbr8Uw,2011,11,1.0,0.0,0.0,1.0,Mika's Greek,127,4.5,Eateries
+22,--5jkZ3-nUPZxUvtcbr8Uw,2011,12,1.0,5.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+23,--5jkZ3-nUPZxUvtcbr8Uw,2012,01,1.0,0.0,0.0,1.0,Mika's Greek,127,4.5,Eateries
+24,--5jkZ3-nUPZxUvtcbr8Uw,2012,03,1.0,0.0,0.0,1.0,Mika's Greek,127,4.5,Eateries
+25,--5jkZ3-nUPZxUvtcbr8Uw,2012,04,1.0,0.0,0.0,1.0,Mika's Greek,127,4.5,Eateries
+26,--5jkZ3-nUPZxUvtcbr8Uw,2012,09,1.0,0.0,0.0,1.0,Mika's Greek,127,4.5,Eateries
+27,--5jkZ3-nUPZxUvtcbr8Uw,2012,10,1.0,0.0,0.0,1.0,Mika's Greek,127,4.5,Eateries
+28,--5jkZ3-nUPZxUvtcbr8Uw,2013,02,1.0,5.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+29,--5jkZ3-nUPZxUvtcbr8Uw,2013,06,1.0,5.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+30,--5jkZ3-nUPZxUvtcbr8Uw,2013,08,1.0,0.0,0.0,1.0,Mika's Greek,127,4.5,Eateries
+31,--5jkZ3-nUPZxUvtcbr8Uw,2013,09,1.0,4.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+32,--5jkZ3-nUPZxUvtcbr8Uw,2013,10,1.0,4.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+33,--5jkZ3-nUPZxUvtcbr8Uw,2014,04,2.0,4.6,5.0,1.0,Mika's Greek,127,4.5,Eateries
+34,--5jkZ3-nUPZxUvtcbr8Uw,2014,06,1.0,4.5,2.0,1.0,Mika's Greek,127,4.5,Eateries
+35,--5jkZ3-nUPZxUvtcbr8Uw,2014,08,1.0,0.0,0.0,1.0,Mika's Greek,127,4.5,Eateries
+36,--5jkZ3-nUPZxUvtcbr8Uw,2014,10,1.0,4.5,2.0,1.0,Mika's Greek,127,4.5,Eateries
+37,--5jkZ3-nUPZxUvtcbr8Uw,2015,01,1.0,4.5,2.0,1.0,Mika's Greek,127,4.5,Eateries
+38,--5jkZ3-nUPZxUvtcbr8Uw,2015,04,1.0,4.333333333333333,3.0,1.0,Mika's Greek,127,4.5,Eateries
+39,--5jkZ3-nUPZxUvtcbr8Uw,2015,08,1.0,4.5,2.0,1.0,Mika's Greek,127,4.5,Eateries
+40,--5jkZ3-nUPZxUvtcbr8Uw,2015,10,1.0,4.8,5.0,1.0,Mika's Greek,127,4.5,Eateries
+41,--5jkZ3-nUPZxUvtcbr8Uw,2015,11,1.0,4.666666666666667,3.0,1.0,Mika's Greek,127,4.5,Eateries
+42,--5jkZ3-nUPZxUvtcbr8Uw,2016,02,1.0,4.666666666666667,6.0,1.0,Mika's Greek,127,4.5,Eateries
+43,--5jkZ3-nUPZxUvtcbr8Uw,2016,03,1.0,4.4,5.0,1.0,Mika's Greek,127,4.5,Eateries
+44,--5jkZ3-nUPZxUvtcbr8Uw,2016,06,1.0,4.75,4.0,1.0,Mika's Greek,127,4.5,Eateries
+45,--5jkZ3-nUPZxUvtcbr8Uw,2011,07,0.0,5.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+46,--5jkZ3-nUPZxUvtcbr8Uw,2011,10,0.0,5.0,2.0,1.0,Mika's Greek,127,4.5,Eateries
+47,--5jkZ3-nUPZxUvtcbr8Uw,2012,02,0.0,3.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+48,--5jkZ3-nUPZxUvtcbr8Uw,2012,05,0.0,5.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+49,--5jkZ3-nUPZxUvtcbr8Uw,2012,07,0.0,5.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+50,--5jkZ3-nUPZxUvtcbr8Uw,2012,08,0.0,4.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+51,--5jkZ3-nUPZxUvtcbr8Uw,2013,03,0.0,5.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+52,--5jkZ3-nUPZxUvtcbr8Uw,2013,07,0.0,5.0,2.0,1.0,Mika's Greek,127,4.5,Eateries
+53,--5jkZ3-nUPZxUvtcbr8Uw,2013,11,0.0,4.5,4.0,1.0,Mika's Greek,127,4.5,Eateries
+54,--5jkZ3-nUPZxUvtcbr8Uw,2013,12,0.0,5.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+55,--5jkZ3-nUPZxUvtcbr8Uw,2014,02,0.0,5.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+56,--5jkZ3-nUPZxUvtcbr8Uw,2014,03,0.0,4.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+57,--5jkZ3-nUPZxUvtcbr8Uw,2014,05,0.0,4.666666666666667,3.0,1.0,Mika's Greek,127,4.5,Eateries
+58,--5jkZ3-nUPZxUvtcbr8Uw,2014,07,0.0,4.5,2.0,1.0,Mika's Greek,127,4.5,Eateries
+59,--5jkZ3-nUPZxUvtcbr8Uw,2014,09,0.0,4.5,4.0,1.0,Mika's Greek,127,4.5,Eateries
+60,--5jkZ3-nUPZxUvtcbr8Uw,2014,11,0.0,4.8,5.0,1.0,Mika's Greek,127,4.5,Eateries
+61,--5jkZ3-nUPZxUvtcbr8Uw,2014,12,0.0,3.6666666666666665,3.0,1.0,Mika's Greek,127,4.5,Eateries
+62,--5jkZ3-nUPZxUvtcbr8Uw,2015,02,0.0,4.666666666666667,3.0,1.0,Mika's Greek,127,4.5,Eateries
+63,--5jkZ3-nUPZxUvtcbr8Uw,2015,03,0.0,4.5,2.0,1.0,Mika's Greek,127,4.5,Eateries
+64,--5jkZ3-nUPZxUvtcbr8Uw,2015,05,0.0,5.0,3.0,1.0,Mika's Greek,127,4.5,Eateries
+65,--5jkZ3-nUPZxUvtcbr8Uw,2015,06,0.0,4.0,3.0,1.0,Mika's Greek,127,4.5,Eateries
+66,--5jkZ3-nUPZxUvtcbr8Uw,2015,07,0.0,4.5,6.0,1.0,Mika's Greek,127,4.5,Eateries
+67,--5jkZ3-nUPZxUvtcbr8Uw,2015,09,0.0,5.0,2.0,1.0,Mika's Greek,127,4.5,Eateries
+68,--5jkZ3-nUPZxUvtcbr8Uw,2015,12,0.0,4.333333333333333,3.0,1.0,Mika's Greek,127,4.5,Eateries
+69,--5jkZ3-nUPZxUvtcbr8Uw,2016,01,0.0,5.0,1.0,1.0,Mika's Greek,127,4.5,Eateries
+70,--5jkZ3-nUPZxUvtcbr8Uw,2016,04,0.0,4.8,5.0,1.0,Mika's Greek,127,4.5,Eateries
+71,--5jkZ3-nUPZxUvtcbr8Uw,2016,05,0.0,5.0,3.0,1.0,Mika's Greek,127,4.5,Eateries
+72,--5jkZ3-nUPZxUvtcbr8Uw,2016,07,0.0,4.0,3.0,1.0,Mika's Greek,127,4.5,Eateries
+73,--BlvDO_RG2yElKu9XA1_g,2011,06,3.0,5.0,2.0,1.0,Asian Island,122,4.0,Eateries
+74,--BlvDO_RG2yElKu9XA1_g,2011,07,1.0,4.5,2.0,1.0,Asian Island,122,4.0,Eateries
+75,--BlvDO_RG2yElKu9XA1_g,2011,08,1.0,0.0,0.0,1.0,Asian Island,122,4.0,Eateries
+76,--BlvDO_RG2yElKu9XA1_g,2011,09,1.0,4.0,1.0,1.0,Asian Island,122,4.0,Eateries
+77,--BlvDO_RG2yElKu9XA1_g,2011,10,1.0,4.0,3.0,1.0,Asian Island,122,4.0,Eateries
+78,--BlvDO_RG2yElKu9XA1_g,2011,11,1.0,2.0,1.0,1.0,Asian Island,122,4.0,Eateries
+79,--BlvDO_RG2yElKu9XA1_g,2011,12,1.0,4.0,2.0,1.0,Asian Island,122,4.0,Eateries
+80,--BlvDO_RG2yElKu9XA1_g,2012,01,1.0,3.4285714285714284,7.0,1.0,Asian Island,122,4.0,Eateries
+81,--BlvDO_RG2yElKu9XA1_g,2012,05,1.0,4.666666666666667,3.0,1.0,Asian Island,122,4.0,Eateries
+82,--BlvDO_RG2yElKu9XA1_g,2013,09,1.0,2.5,2.0,1.0,Asian Island,122,4.0,Eateries
+83,--BlvDO_RG2yElKu9XA1_g,2013,12,2.0,4.0,1.0,1.0,Asian Island,122,4.0,Eateries
+84,--BlvDO_RG2yElKu9XA1_g,2014,01,1.0,3.0,2.0,1.0,Asian Island,122,4.0,Eateries
+85,--BlvDO_RG2yElKu9XA1_g,2014,08,1.0,4.5,2.0,1.0,Asian Island,122,4.0,Eateries
+86,--BlvDO_RG2yElKu9XA1_g,2014,11,1.0,4.0,1.0,1.0,Asian Island,122,4.0,Eateries
+87,--BlvDO_RG2yElKu9XA1_g,2015,03,2.0,2.3333333333333335,3.0,1.0,Asian Island,122,4.0,Eateries
+88,--BlvDO_RG2yElKu9XA1_g,2015,09,1.0,3.75,4.0,1.0,Asian Island,122,4.0,Eateries
+89,--BlvDO_RG2yElKu9XA1_g,2015,12,1.0,0.0,0.0,1.0,Asian Island,122,4.0,Eateries
+90,--BlvDO_RG2yElKu9XA1_g,2016,01,1.0,4.0,2.0,1.0,Asian Island,122,4.0,Eateries
+91,--BlvDO_RG2yElKu9XA1_g,2016,06,1.0,3.1818181818181817,11.0,1.0,Asian Island,122,4.0,Eateries
+92,--BlvDO_RG2yElKu9XA1_g,2011,02,0.0,5.0,1.0,1.0,Asian Island,122,4.0,Eateries
+93,--BlvDO_RG2yElKu9XA1_g,2011,05,0.0,4.75,4.0,1.0,Asian Island,122,4.0,Eateries
+94,--BlvDO_RG2yElKu9XA1_g,2012,02,0.0,4.0,2.0,1.0,Asian Island,122,4.0,Eateries
+95,--BlvDO_RG2yElKu9XA1_g,2012,03,0.0,4.0,1.0,1.0,Asian Island,122,4.0,Eateries
+96,--BlvDO_RG2yElKu9XA1_g,2012,04,0.0,5.0,1.0,1.0,Asian Island,122,4.0,Eateries
+97,--BlvDO_RG2yElKu9XA1_g,2012,06,0.0,3.0,1.0,1.0,Asian Island,122,4.0,Eateries
+98,--BlvDO_RG2yElKu9XA1_g,2012,07,0.0,1.0,1.0,1.0,Asian Island,122,4.0,Eateries
