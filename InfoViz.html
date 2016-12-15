@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+
+<style>
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+    li {
+               list-style: none;
+            }
+            
+    li:hover {
+                background-color: black;
+                color: white;
+                cursor: pointer;
+            }
+     .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.0px;
+    }
+    
+</style>
+<body>
+
+    <div id="categories">
+    </div>
+    
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script type = "text/javascript">
+    
+var margin = {top: 50, right: 0, bottom: 70, left: 70},
+    width  = 900,
+    height = 600;
+    
+    
+//color scale:
+    var cValue = function(d){return d.broad_categories;},
+        color = d3.scale.category10();
+
+// add the tooltip area to the webpage
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+// load data
+    
+    var data = [];
+    var list = d3.select("#categories");
+d3.csv("biz_tip_sentiment.csv", function(error, result) {
+    data = result;
+  // change string (from CSV) into number format
+  data.forEach(function(d) {
+    d.stars = +d.stars;
+    d.sentiment = +d.average_sentiment;
+    d.tips_count = +d.tips_count;
+    
+  });
+    renderList(data);
+    
+    
+    function  renderList(data){
+        list.selectAll("option")
+            .data(d3.map(data, function(d){return d.broad_categories;}).keys())
+            .enter()
+            .append("option")
+            .text(function(d){return d.broad_categories})
+            .attr("value",function (d){ return d.broad_categories;})
+    }
+    
+    
+    var xValue = function(d) { return d.stars;}, 
+        xScale = d3.scale.linear().range([0, width]).domain([0,5.2]),
+        xMap = function(d) {
+        return xScale(xValue(d));
+        }, 
+        xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+    
+// setup y axis
+    var yValue = function(d) { return d.sentiment;}, 
+        yScale = d3.scale.linear().range([height, 0]).domain([-1,1]),
+        yMap = function(d) { return yScale(yValue(d));}, 
+        yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+    var SizeScale = d3.scale.linear()
+                .range([5,50]).domain([1,10]),
+        sizeValue = function(d){ return d.tips_count;},
+        sizeMap = function(d){return SizeScale(sizeValue(d))};
+
+// add the graph 
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height/2 + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("Stars");
+
+  // y-axis
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .style("text-anchor", "end")
+      .text("Sentiment");
+
+  // draw dots
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", function(d){return Math.sqrt(sizeMap(d)/Math.PI)})
+      .attr("cx", xMap)
+      .attr("cy", yMap)
+      .style("fill",function(d){ return color(cValue(d));})
+      .on("mouseenter",function(){
+            d3.select(this).style({stroke: "black"})
+            })
+      .on("mouseleave", function(d,i){
+            d3.select(this).style({stroke: undefined})
+            });   
+  
+
+});
+
+</script>
+</body>
+</html>
