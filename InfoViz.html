@@ -18,8 +18,8 @@ body {
   shape-rendering: crispEdges;
 }
 
-.dot {
-  stroke: #000;
+.circles {
+    stroke: #000;
 }
 
 .tooltip {
@@ -38,11 +38,8 @@ body {
     
 </style>
 <body>
-
-    <div >
-        <label>Categories: </label>
-        
-        
+    <div id = 'categories'>
+    
     </div>
     <div >
         <label>Price Range: </label>
@@ -69,17 +66,61 @@ var data = [];
 var list = d3.select("#categories");
 var price = d3.select("#price_range");
 
+var xValue = function(d) { return d.stars;}, 
+    xScale = d3.scale.linear().range([0,width]).domain([0,5.2]),
+    xMap = function(d) {
+            return xScale(xValue(d));
+        }, 
+    xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+    
+// setup y axis
+var yValue = function(d) { return d.sentiment;}, 
+    yScale = d3.scale.linear().range([height, 0]).domain([-1,1]),
+    yMap = function(d) { return yScale(yValue(d));}, 
+    yAxis = d3.svg.axis().scale(yScale).orient("left");
 
+//size scale:   
+var SizeScale = d3.scale.linear()
+            .range([5,50]).domain([1,10]),
+    sizeValue = function(d){ return d.tips_count;},
+    sizeMap = function(d){return SizeScale(sizeValue(d))};
     
 //color scale:
-    var cValue = function(d){return d.broad_categories;},
-        color = d3.scale.category10();
+var cValue = function(d){return d.broad_categories;},
+    color = d3.scale.category10();
 
 // add the tooltip area to the webpage
-    var tooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
+var svg = d3.select("#scatter").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var x = svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height/2 + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -8)
+      .style("text-anchor", "end")
+      .text("Stars");
+
+  // y-axis
+  var y = svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 8)
+      .style("text-anchor", "end")
+      .text("Sentiment");    
+    
 // load data
     
 d3.csv("biz_tip_sentiment.csv", function(error, result) {
@@ -99,6 +140,8 @@ d3.csv("biz_tip_sentiment.csv", function(error, result) {
     render(data);
     //renderGraph(data);
     
+    
+    
     function render(data){
         
         var cat = d3.select('#select').property('value'); 
@@ -114,7 +157,7 @@ d3.csv("biz_tip_sentiment.csv", function(error, result) {
         
             return d.broad_categories == cat;
             });
-        console.log(cat);    
+        //console.log(cat);    
          console.log(FilteredData[0].name);
         }
         
@@ -123,13 +166,13 @@ d3.csv("biz_tip_sentiment.csv", function(error, result) {
     }
     
     function  renderList(data){
-        var select = d3.select('body')
+        var select = d3.select('#categories')
         .append('select')
         .attr('id','select')
         .on('change',onchange)
         
     var options = select.selectAll("option")
-            .data(d3.map(data, function(d){return d.broad_categories;}).keys())
+            .data(['All'].concat(d3.map(data, function(d){return d.broad_categories;}).keys()))
             .enter()
             .append("option")
             .text(function(d){return d;})
@@ -138,76 +181,30 @@ d3.csv("biz_tip_sentiment.csv", function(error, result) {
     
     function  renderPriceRange(data){
         price.selectAll("option")
-            .data(d3.map(data, function(d){return d.Price_Range;}).keys())
+            .data(['All'].concat(d3.map(data, function(d){return d.Price_Range;}).keys()))
             .enter()
             .append("option")
             .text(function(d){return d+" $" ;})
             .attr("value",function (d){ return d;})
     }
     
+    //scatterplot stage 
+    
+    
     function renderGraph(data){
-      
-        var xValue = function(d) { return d.stars;}, 
-        xScale = d3.scale.linear().range([0,width]).domain([0,5.2]),
-        xMap = function(d) {
-            return xScale(xValue(d));
-        }, 
-        xAxis = d3.svg.axis().scale(xScale).orient("bottom");
-    
-// setup y axis
-    var yValue = function(d) { return d.sentiment;}, 
-        yScale = d3.scale.linear().range([height, 0]).domain([-1,1]),
-        yMap = function(d) { return yScale(yValue(d));}, 
-        yAxis = d3.svg.axis().scale(yScale).orient("left");
-
-//size scale:   
-    var SizeScale = d3.scale.linear()
-                .range([5,50]).domain([1,10]),
-        sizeValue = function(d){ return d.tips_count;},
-        sizeMap = function(d){return SizeScale(sizeValue(d))};
-    
-   // xScale.domain([d3.min(data, xValue)-0.1, d3.max(data, xValue)+0.1]);
-//    yScale.domain([d3.min(data, yValue)-0.1, d3.max(data, yValue)+0.1]);
-    
-    var svg = d3.select("#scatter").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
-    svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height/2 + ")")
-      .call(xAxis)
-    .append("text")
-      .attr("class", "label")
-      .attr("x", width)
-      .attr("y", -8)
-      .style("text-anchor", "end")
-      .text("Stars");
-
-  // y-axis
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("class", "label")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 8)
-      .style("text-anchor", "end")
-      .text("Sentiment");
-
-  // draw dots
-  svg.selectAll(".dot")
+   
+  // draw circles
+var selection = svg.selectAll("circles")
       .data(data)
     .enter().append("circle")
-      .attr("class", "dot")
+      .attr("class", "circles")
       .attr("r", function(d){return Math.sqrt(sizeMap(d)/Math.PI)})
       .attr("cx", xMap)
       .attr("cy", yMap)
       .style("fill",function(d){ return color(cValue(d));})
     .attr("opacity","0.6")
-      .on("click",function(d,i){alert(d.name);}); 
+      .on("click",function(d,i){alert(d.name);});
+    //selection.exit().remove(); 
     
     var legend = svg.selectAll(".legend")
         .data(color.domain())
