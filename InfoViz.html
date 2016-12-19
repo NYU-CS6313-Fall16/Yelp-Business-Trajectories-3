@@ -63,8 +63,9 @@ body {
     <div id="scatter">
     
     </div>
-    
+    <div id="tip_area"></div>
     </div>
+    
     
     
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -148,6 +149,7 @@ d3.csv("LV_btrs.csv", function(error, result) {
     d.tips_count = +d.tips_count;
     d.name = d.name;
     d.broad_categories = d.broad_categories;
+        d.business_id = d.business_id;
     
   });
     
@@ -232,7 +234,19 @@ var selection = svg.selectAll("circle")
             circle = d3.select(this);
                circle.transition().duration(400).style("opacity",0.7).style("stroke-width","1px")
                .ease("elastic");
-        });
+        })
+        .on("click",function(d){tip_load(d.business_id)})
+        .on("double-click",function(d){
+            tooltip.transition()
+            .duration(500)
+            .style("opacity", 0);
+            circle = d3.select(this);
+               circle.transition().duration(400).style("opacity",0.7).style("stroke-width","1px")
+               .ease("elastic");
+            d3.select("tip_area").selectAll("li").remove();
+        })
+        ;
+        
 
     //selection.exit().remove(); 
     
@@ -267,6 +281,32 @@ var selection = svg.selectAll("circle")
         render(data);
     }
     
+    
+    function tip_load(biz_id){
+        var unload = d3.select('#tip_area').selectAll("li").remove();
+        //get d.text for biz_id
+        var BusinessWords = data.filter(function(d){
+                    return d.business_id == biz_id;
+                });
+                BusinessWords = BusinessWords[0].text;
+                BusinessWords = BusinessWords.split("[");
+                BusinessWords = BusinessWords[1].split("]");
+                BusinessWords = BusinessWords[0].split(",");  
+        //split and strip text to get tip array
+         //console.log(BusinessWords[0]);
+        
+        //for(var i =0;i<BusinessWords.length; i++)
+        {
+         //console.log(BusinessWords[i]);
+        unload.data(BusinessWords)
+        .enter()
+        .append("li")
+        .text(function (d){return d});   
+        }   
+        
+        //return tip_array
+       
+    }
 
 });
 
