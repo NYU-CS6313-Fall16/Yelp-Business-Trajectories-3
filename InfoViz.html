@@ -74,7 +74,7 @@ body {
 <script type = "text/javascript">
     
 //define margin:
-var margin = {top: 50, right: 0, bottom: 70, left: 70},
+var margin = {top: 20, right: 500, bottom: 70, left: 70},
     width  = 900,
     height = 600;
 
@@ -89,6 +89,8 @@ var xValue = function(d) { return d.stars;},
             return xScale(xValue(d));
         }, 
     xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+    
+    
     
 // setup y axis
 var yValue = function(d) { return d.sentiment;}, 
@@ -250,24 +252,22 @@ var selection = svg.selectAll("circle")
     
     //color squares:        
     legend.append("rect")
-    .attr("x", width -18)
+    .attr("x", width -28)
     .attr("width",18)
     .attr("height",18)
     .style("fill",color);
     
     //legend text:
     legend.append("text")
-    .attr("x",width-18)
-    .attr("y", 18)
+    .attr("x",width)
+    .attr("y", 8)
     .attr("dy",".35em")
-    .style("text-anchor","end")
+    .style("text-anchor","start")
     .text(function(d){ return d;})
         
    } 
   
-    
-    
-    
+
 
 
 });
@@ -275,6 +275,12 @@ var selection = svg.selectAll("circle")
 //word cloud area:
 
 function get_cloud(biz_id, biz)    {
+    //screating scale for fontsize
+    var fontScale = d3.scale.linear()
+            .range([6,36]),
+    fontValue = function(d){ return d.Freq;},
+    fontMap = function(d){return fontScale(fontValue(d))};
+    
     d3.select("#tip_area").selectAll("text").remove();
     d3.select("#cloud").selectAll("h1").text(biz);
 var cloud_color = d3.scale.linear()
@@ -288,7 +294,7 @@ var cloud_color = d3.scale.linear()
        
             function getData(dataWords) {
             var business = biz_id;
-            console.log(business);
+            //console.log(business);
             d3.csv("business_words.csv", function(error,result) {
                 dataBiz = result;
                 
@@ -306,21 +312,25 @@ var cloud_color = d3.scale.linear()
                 var numWords = BusinessWords.length;
                 if (numWords > 50) {numWords = 50}
                 var text = [];
-                
+                var wordData =[];
                 for (var i = 0; i < numWords; i++) {
                     word = BusinessWords[i]
                     word = word.replace(/['"]+/g, '');  //cleaning
                     word = word.trimLeft();
                     //console.log(word);
-                    var wordData = dataWords.filter(function(d){    
+                    wordData = dataWords.filter(function(d){    
                         return d.Word == word;
                     });
                     //wordData = wordData;
-                    console.log(wordData);
+                    
+                    //size adustment
+                    var font_sz = (wordData.Freq);
+                    //console.log(font_sz);
                     
                     text.push({"text": word, "size": 16});
-                    };
-            console.log(text);    
+                    }
+                console.log(text);
+            //console.log(text);    
                 
             var SizeScale = d3.scale.linear()
             .range([8,32]),
