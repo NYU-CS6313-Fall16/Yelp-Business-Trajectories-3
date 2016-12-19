@@ -132,12 +132,16 @@ body {
                     
                         <style>
 body {
-  font: 10px sans-serif;
+  font: 20px sans-serif;
 }
     svg{
-        border: 1px;
+        border: 1px; 
     }
-
+    .cloud{
+        padding-left: 0px;
+        padding-top: 0px;
+    }
+    
 .axis path,
 .axis line {
   fill: none;
@@ -174,33 +178,29 @@ body {
     
 </style>
 <body>
-    
-    <h1>Yelp Business Trajectories</h1>
+ 
     <div class = "scatter_container">
     <div id = 'categories'>
     
-    </div>
-    <div >
-        <label>Price Range: </label>
-        <select id="price_range">
-        <option>All</option>
-        </select>
     </div>
     
     <div id="scatter">
     
     </div>
-    <div id="tip_area"></div>
+        <div id="cloud"> 
+            <h1></h1>
+            <svg id="tip_area"></svg>
+        </div>
     </div>
     
-    
-    
 <script src="http://d3js.org/d3.v3.min.js"></script>
+    
+<script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
 
 <script type = "text/javascript">
     
 //define margin:
-var margin = {top: 50, right: 0, bottom: 70, left: 70},
+var margin = {top: 20, right: 500, bottom: 70, left: 70},
     width  = 900,
     height = 600;
 
@@ -210,11 +210,13 @@ var list = d3.select("#categories");
 var price = d3.select("#price_range");
 
 var xValue = function(d) { return d.stars;}, 
-    xScale = d3.scale.linear().range([0,width]).domain([0,5.2]),
+    xScale = d3.scale.linear().range([0,width]).domain([0.8,5.2]),
     xMap = function(d) {
             return xScale(xValue(d));
         }, 
     xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+    
+    
     
 // setup y axis
 var yValue = function(d) { return d.sentiment;}, 
@@ -245,7 +247,7 @@ var svg = d3.select("#scatter").append("svg")
     //x-axis
     var x = svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + height/2 + ")")
+      .attr("transform", "translate(0," + height/1.25 + ")")
       .call(xAxis)
     .append("text")
       .attr("class", "label")
@@ -261,7 +263,7 @@ var svg = d3.select("#scatter").append("svg")
     .append("text")
       .attr("class", "label")
       .attr("transform", "rotate(-90)")
-      .attr("y", 8)
+      .attr("y", 18)
       .style("text-anchor", "end")
       .text("Sentiment");    
     
@@ -281,14 +283,13 @@ d3.csv("LV_btrs.csv", function(error, result) {
   });
     
     renderList(data);
-    renderPriceRange(data);
     render(data);
     //renderGraph(data);
     
     function render(data){
         
         var cat = d3.select('#select').property('value'); 
-       
+        
         //if the data doesnt need to be filtered:
         if (cat == 'All'){
          var  FilteredData = data;
@@ -322,14 +323,14 @@ d3.csv("LV_btrs.csv", function(error, result) {
             .attr("value",function(d){return d;});
     }
     
-    function  renderPriceRange(data){
-        price.selectAll("option")
-            .data(['All'].concat(d3.map(data, function(d){return d.Price_Range;}).keys()))
-            .enter()
-            .append("option")
-            .text(function(d){return d+" $" ;})
-            .attr("value",function (d){ return d;})
+     function onchange(){
+        
+       var cat =d3.select('#categories').property('value');
+      
+        svg.selectAll("circle").remove();
+        render(data);
     }
+    
     
     //scatterplot stage 
     
@@ -352,7 +353,7 @@ var selection = svg.selectAll("circle")
                 circle = d3.select(this);
                circle.transition().duration(400).style("opacity",1).style("stroke-width","3px")
                .ease("elastic");
-        tooltip.html(d["name"]).style("left",(d3.event.pageX +5) +"px").style("top",(d3.event.pageY -28)+"px");                
+        tooltip.html(d["name"] +"  ("+ "$".repeat(d["Price_Range"])+")").style("left",(d3.event.pageX +5) +"px").style("top",(d3.event.pageY -28)+"px");                
                                      })
         .on("mouseout",function(d){
             tooltip.transition()
@@ -362,16 +363,8 @@ var selection = svg.selectAll("circle")
                circle.transition().duration(400).style("opacity",0.7).style("stroke-width","1px")
                .ease("elastic");
         })
-        .on("click",function(d){tip_load(d.business_id)})
-        .on("double-click",function(d){
-            tooltip.transition()
-            .duration(500)
-            .style("opacity", 0);
-            circle = d3.select(this);
-               circle.transition().duration(400).style("opacity",0.7).style("stroke-width","1px")
-               .ease("elastic");
-            d3.select("tip_area").selectAll("li").remove();
-        })
+       // .on("click",function(d){tip_load(d.business_id)})
+        .on("click",function (d){get_cloud(d.business_id, d.name)})
         ;
         
 
@@ -385,58 +378,121 @@ var selection = svg.selectAll("circle")
     
     //color squares:        
     legend.append("rect")
-    .attr("x", width -18)
+    .attr("x", width -28)
     .attr("width",18)
     .attr("height",18)
     .style("fill",color);
     
     //legend text:
     legend.append("text")
-    .attr("x",width-18)
-    .attr("y", 18)
+    .attr("x",width)
+    .attr("y", 8)
     .attr("dy",".35em")
-    .style("text-anchor","end")
+    .style("text-anchor","start")
     .text(function(d){ return d;})
         
    } 
   
-    function onchange(){
-        
-       var cat =d3.select('#categories').property('value');
-      
-        svg.selectAll("circle").remove();
-        render(data);
-    }
-    
-    
-    function tip_load(biz_id){
-        var unload = d3.select('#tip_area').selectAll("li").remove();
-        //get d.text for biz_id
-        var BusinessWords = data.filter(function(d){
-                    return d.business_id == biz_id;
-                });
-                BusinessWords = BusinessWords[0].text;
-                BusinessWords = BusinessWords.split("[");
-                BusinessWords = BusinessWords[1].split("]");
-                BusinessWords = BusinessWords[0].split(",");  
-        //split and strip text to get tip array
-         //console.log(BusinessWords[0]);
-        
-        //for(var i =0;i<BusinessWords.length; i++)
-        {
-         //console.log(BusinessWords[i]);
-        unload.data(BusinessWords)
-        .enter()
-        .append("li")
-        .text(function (d){return d});   
-        }   
-        
-        //return tip_array
-       
-    }
+
+
 
 });
 
+//word cloud area:
+
+function get_cloud(biz_id, biz)    {
+    //screating scale for fontsize
+    var fontScale = d3.scale.linear()
+            .range([6,36]),
+    fontValue = function(d){ return d.Freq;},
+    fontMap = function(d){return fontScale(fontValue(d))};
+    
+    d3.select("#tip_area").selectAll("text").remove();
+    d3.select("#cloud").selectAll("h1").text(biz);
+var cloud_color = d3.scale.linear()
+            .domain([0,1,2,3,4,5,6,10,15,20,100])
+            .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
+
+    var dataWords = [];
+        d3.csv("word_sentiment_freq.csv", function(error,result) {
+            dataWords = result;
+            getData(dataWords);
+       
+            function getData(dataWords) {
+            var business = biz_id;
+            //console.log(business);
+            d3.csv("business_words.csv", function(error,result) {
+                dataBiz = result;
+                
+                var BusinessWords = dataBiz.filter(function(d){
+                    return d.business_id == business;
+                });
+                
+                //clean up text from bix record
+                BusinessWords = BusinessWords[0].text;
+                BusinessWords = BusinessWords.split("[");
+                BusinessWords = BusinessWords[1].split("]");
+                BusinessWords = BusinessWords[0].split(",");     
+                //console.log(BusinessWords);
+                //number of unique words in the tips
+                var numWords = BusinessWords.length;
+                if (numWords > 50) {numWords = 50}
+                var text = [];
+                var wordData =[];
+                for (var i = 0; i < numWords; i++) {
+                    word = BusinessWords[i]
+                    word = word.replace(/['"]+/g, '');  //cleaning
+                    word = word.trimLeft();
+                    //console.log(word);
+                    wordData = dataWords.filter(function(d){    
+                        return d.Word == word;
+                    });
+                    //wordData = wordData;
+                    
+                    //size adustment
+                    var font_sz = (wordData.Freq);
+                    //console.log(font_sz);
+                    
+                    text.push({"text": word, "size": 16});
+                    }
+                console.log(text);
+            //console.log(text);    
+                
+            var SizeScale = d3.scale.linear()
+            .range([8,32]),
+        sizeValue = function(d){ return d.size;},
+        sizeMap = function(d){return SizeScale(sizeValue(d))};       
+        
+            d3.layout.cloud().size([600,600])  
+            .words(text)
+            .rotate(0).fontSize(16).on("end",draw).start();
+            
+            function draw(words){
+                
+                d3.select("#tip_area")
+                .attr("width",700)
+                .attr("height",700)
+                .attr("class","wordcloud")
+                .append("g")
+                .attr("transform","translate(250,250)")
+                .selectAll("Word")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", 16)
+                .style("fill",function(d,i){color(i)})
+                .attr("transform", function(d){
+                    return "translate(" +[d.x, d.y]+ ")rotate ("+ d.rotate + ")";
+                })
+                .text(function(d){return d.text;});
+            }
+            
+        });
+      }
+  });        
+}
+    
+    
+    
 </script>
 </body>
 </html>
