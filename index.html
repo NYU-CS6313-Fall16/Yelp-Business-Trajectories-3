@@ -1,42 +1,442 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
-<title>Yelp Business Trajectory</title>
-</head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Yelp Business Trajectories</title>
+
+    
+
+  
+
+    <!-- Custom CSS -->
+   <! <link href="../dist/css/sb-admin-2.css" rel="stylesheet"> -->
+
+<script src="http://www.w3schools.com/lib/w3data.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+</head>
+<style>
+body {
+  font: 20px sans-serif;
+}
+    svg{
+        border: 1px;
+    }
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.circles {
+    stroke: #000;
+}
+    div.tooltip{
+        position: absolute;
+        text-align: center;
+        padding: 2px;
+        background: lightsteelblue;
+        font: 15px sans-serif;
+        pointer-events: none;
+    }    
+    
+     .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.0px;
+    }
+    
+    .scatter_container{
+      border: 1px;  
+        width: 900;
+        height: 600;
+        
+    }
+    
+</style>
 <body>
+    
 
 
-  <div class="w3-container w3-teal">
-<h1 style="text-align:center;">Yelp Business Trajectory</h1></div>
 
-<div style="border: 1px solid; float: left; width: 15%; height: 800px;" id="1"><font size="6">Navigation Menu
-<div id="mainContent">
-    <div id="option">
-        <div>
-            <select id="sentimentOption">
-                <option value="Select">Select</option>
-                
-            </select>
-        </div>
-        <div>
-            <select id="candidateOption">
-                <option value="Select">Select</option>
-                
-            </select>
-        </div>
+    <div id="wrapper">
+
+        
+                <! <a class="navbar-brand" href="index.html"><div class="w3-container w3-blue">
+<h1 style="text-align:center;"><img src="logo.png" alt="HTML5 Icon" style="width:90px;height:60px;"> Business Trajectory</h1></div></div></a> 
+
+            </div>
+            <!-- /.navbar-header -->
+
+            
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                 
+                         
+			
+  <div id = 'categories'<label>Categories: </label> </div>
+    
+    
+    <div >
+        <label>Price Range: </label>
+        <select id="price_range">
+        <option>All</option>
+        </select>
     </div>
-</div>
-</div>
-<div id="nestedSVG"></div>
-<div style="border: 1px solid; float: left; height: 450px; width: 60%;" id="1"><font size="6">Main View</div>
-<div style="border: 1px solid; float: left; height: 450px; width: 25%;" id="1"><font size="6">Auxilliary View</div>
-<div style="border: 1px solid; width: 42.5%; float: right; height: 290px;" id="1"><font size="6">Auxilliary View</div>
-<div style="border: 1px solid; float: left; width: 42.5%; height: 290px;" id="1"><font size="6">Auxilliary View</div>
+    
+   
+
+    
+    
+    
+    
+                        
+                        
+                            
+                <!-- /.sidebar-collapse -->
+            </div>
+            
+
+       
+                   <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-0">
+                  <h1 class="page-header">Sentiment vs Rating Analysis</h1>  
+                </div>
+                <!-- /.col-lg-0 -->
+            </div>
+                
+                    
+                    
+                        <style>
+body {
+  font: 10px sans-serif;
+}
+    svg{
+        border: 1px;
+    }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.circles {
+    stroke: #000;
+}
+
+
+    div.tooltip{
+        position: absolute;
+        text-align: center;
+        padding: 2px;
+        background: lightsteelblue;
+        font: 12px sans-serif;
+        pointer-events: none;
+    }    
+    
+     .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.0px;
+    }
+    
+    .scatter_container{
+      border: 1px;  
+        width: 700;
+        height: 600;
+        
+    }
+    
+</style>
+<body>
+    
+    <h1>Yelp Business Trajectories</h1>
+    <div class = "scatter_container">
+    <div id = 'categories'>
+    
+    </div>
+    <div >
+        <label>Price Range: </label>
+        <select id="price_range">
+        <option>All</option>
+        </select>
+    </div>
+    
+    <div id="scatter">
+    
+    </div>
+    <div id="tip_area"></div>
+    </div>
+    
+    
+    
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script type = "text/javascript">
+    
+//define margin:
+var margin = {top: 50, right: 0, bottom: 70, left: 70},
+    width  = 900,
+    height = 600;
+
+//define variables:    
+var data = [];
+var list = d3.select("#categories");
+var price = d3.select("#price_range");
+
+var xValue = function(d) { return d.stars;}, 
+    xScale = d3.scale.linear().range([0,width]).domain([0,5.2]),
+    xMap = function(d) {
+            return xScale(xValue(d));
+        }, 
+    xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+    
+// setup y axis
+var yValue = function(d) { return d.sentiment;}, 
+    yScale = d3.scale.linear().range([height, 0]).domain([-1,1]),
+    yMap = function(d) { return yScale(yValue(d));}, 
+    yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+//size scale:   
+var SizeScale = d3.scale.linear()
+            .range([3,18]),
+    sizeValue = function(d){ return d.tips_count;},
+    sizeMap = function(d){return SizeScale(sizeValue(d))};
+    
+//color scale:
+var cValue = function(d){return d.broad_categories;},
+    color = d3.scale.category10();
+
+// add the tooltip area to the webpage
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+var svg = d3.select("#scatter").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    //x-axis
+    var x = svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height/2 + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -8)
+      .style("text-anchor", "end")
+      .text("Stars");
+
+  // y-axis
+  var y = svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 8)
+      .style("text-anchor", "end")
+      .text("Sentiment");    
+    
+// load data
+    
+d3.csv("LV_btrs.csv", function(error, result) {
+    data = result;
+   //change string (from CSV) into number format
+    data.forEach(function(d) {
+    d.stars = +d.stars;
+    d.sentiment = +d.average_sentiment;
+    d.tips_count = +d.tips_count;
+    d.name = d.name;
+    d.broad_categories = d.broad_categories;
+        d.business_id = d.business_id;
+    
+  });
+    
+    renderList(data);
+    renderPriceRange(data);
+    render(data);
+    //renderGraph(data);
+    
+    function render(data){
+        
+        var cat = d3.select('#select').property('value'); 
+       
+        //if the data doesnt need to be filtered:
+        if (cat == 'All'){
+         var  FilteredData = data;
+        //console.log('All');
+        }
+        else{
+        
+            var FilteredData = data.filter(function(d){
+        
+            return d.broad_categories == cat;
+            });
+        //console.log(cat);    
+         console.log(FilteredData[0].name);
+        }
+        
+        renderGraph(FilteredData);
+        
+    }
+    
+    function  renderList(data){
+        var select = d3.select('#categories')
+        .append('select')
+        .attr('id','select')
+        .on('change',onchange)
+        
+    var options = select.selectAll("option")
+            .data(['All'].concat(d3.map(data, function(d){return d.broad_categories;}).keys()))
+            .enter()
+            .append("option")
+            .text(function(d){return d;})
+            .attr("value",function(d){return d;});
+    }
+    
+    function  renderPriceRange(data){
+        price.selectAll("option")
+            .data(['All'].concat(d3.map(data, function(d){return d.Price_Range;}).keys()))
+            .enter()
+            .append("option")
+            .text(function(d){return d+" $" ;})
+            .attr("value",function (d){ return d;})
+    }
+    
+    //scatterplot stage 
+    
+    
+    function renderGraph(data){
+   svg.selectAll("circle").remove();
+  // draw circles
+var selection = svg.selectAll("circle")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "circles")
+      .attr("r", function(d){return Math.sqrt(sizeMap(d)/Math.PI)})
+      .attr("cx", xMap)
+      .attr("cy", yMap)
+      .style("fill",function(d){ return color(cValue(d));})
+        .attr("opacity","0.6")
+        .on("mouseover",function(d)
+              {tooltip.transition()
+                .duration(100).style("opacity",.9);
+                circle = d3.select(this);
+               circle.transition().duration(400).style("opacity",1).style("stroke-width","3px")
+               .ease("elastic");
+        tooltip.html(d["name"]).style("left",(d3.event.pageX +5) +"px").style("top",(d3.event.pageY -28)+"px");                
+                                     })
+        .on("mouseout",function(d){
+            tooltip.transition()
+            .duration(500)
+            .style("opacity", 0);
+            circle = d3.select(this);
+               circle.transition().duration(400).style("opacity",0.7).style("stroke-width","1px")
+               .ease("elastic");
+        })
+        .on("click",function(d){tip_load(d.business_id)})
+        .on("double-click",function(d){
+            tooltip.transition()
+            .duration(500)
+            .style("opacity", 0);
+            circle = d3.select(this);
+               circle.transition().duration(400).style("opacity",0.7).style("stroke-width","1px")
+               .ease("elastic");
+            d3.select("tip_area").selectAll("li").remove();
+        })
+        ;
+        
+
+    //selection.exit().remove(); 
+    
+    var legend = svg.selectAll(".legend")
+        .data(color.domain())
+        .enter().append("g")            
+        .attr("class","legend")
+        .attr("transform",function(d,i){ return "translate(0," + i * 20 + ")";})
+    
+    //color squares:        
+    legend.append("rect")
+    .attr("x", width -18)
+    .attr("width",18)
+    .attr("height",18)
+    .style("fill",color);
+    
+    //legend text:
+    legend.append("text")
+    .attr("x",width-18)
+    .attr("y", 18)
+    .attr("dy",".35em")
+    .style("text-anchor","end")
+    .text(function(d){ return d;})
+        
+   } 
+  
+    function onchange(){
+        
+       var cat =d3.select('#categories').property('value');
+      
+        svg.selectAll("circle").remove();
+        render(data);
+    }
+    
+    
+    function tip_load(biz_id){
+        var unload = d3.select('#tip_area').selectAll("li").remove();
+        //get d.text for biz_id
+        var BusinessWords = data.filter(function(d){
+                    return d.business_id == biz_id;
+                });
+                BusinessWords = BusinessWords[0].text;
+                BusinessWords = BusinessWords.split("[");
+                BusinessWords = BusinessWords[1].split("]");
+                BusinessWords = BusinessWords[0].split(",");  
+        //split and strip text to get tip array
+         //console.log(BusinessWords[0]);
+        
+        //for(var i =0;i<BusinessWords.length; i++)
+        {
+         //console.log(BusinessWords[i]);
+        unload.data(BusinessWords)
+        .enter()
+        .append("li")
+        .text(function (d){return d});   
+        }   
+        
+        //return tip_array
+       
+    }
+
+});
+
+</script>
 </body>
 </html>
-
-<iframe src="image.svg">
-  Your browser does not support iframes
-</iframe>
