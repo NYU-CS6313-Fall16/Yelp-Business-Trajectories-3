@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+
+<style>
+body {
+  font: 10px sans-serif;
+}
+    svg{
+        border: 1px;
+    }
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.dot {
+  stroke: #000;
+}
+#tooltip{
+    position: absolute;
+    top: 0;
+    left:0;
+    background-color: rgba(255,255,255,0.8);
+    padding: 5;
+    border: solid 1px black;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s 
+    }
+    
+     .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.0px;
+    }
+    
+</style>
+<body>
+
+    <div >
+        <label>Categories: </label>
+        
+        
+    </div>
+    
+    <div id= "tooltip">Tooltip</div>
+    <div >
+        <label>Price Range: </label>
+        <select id="price_range">
+        <option>All</option>
+        </select>
+    </div>
+    
+    <div id="scatter">
+    
+    </div>
+    
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script type = "text/javascript">
+    
+//define margin:
+var margin = {top: 50, right: 0, bottom: 70, left: 70},
+    width  = 900,
+    height = 600;
+//define variables:    
+var data = [];
+var list = d3.select("#categories");
+var price = d3.select("#price_range");
+    
+//color scale:
+    var cValue = function(d){return d.broad_categories;},
+        color = d3.scale.category10();
+
+// load data
+    
+d3.csv("biz_tip_sentiment.csv", function(error, result) {
+    data = result;
+   //change string (from CSV) into number format
+    data.forEach(function(d) {
+    d.stars = +d.stars;
+    d.sentiment = +d.average_sentiment;
+    d.tips_count = +d.tips_count;
+    d.name = d.name;
+    d.broad_categories = d.broad_categories;
+    
+  });
+    
+    renderList(data);
+    renderPriceRange(data);
+    render(data);
+    renderGraph(data);
+    
+    function render(data){
+        
+        var cat = d3.select('#select').property('value'); 
+        
+        //if the data doesnt need to be filtered:
+        if (cat == 'All'){
+         var  FilteredData = data;
+        console.log('All');
+        }
+        else{
+        
+        var FilteredData = data.filter(function(d){
+        
+            return d.broad_categories == cat;
+            });
+        console.log(cat);    
+         console.log(FilteredData[0].name);
+        }
+        
+        renderGraph(FilteredData);
+        
+    }
+    
+    function  renderList(data){
+        var select = d3.select('body')
+        .append('select')
+        .attr('id','select')
+        .on('change',onchange)
+        
+    var options = select.selectAll("option")
+            .data(d3.map(data, function(d){return d.broad_categories;}).keys())
+            .enter()
+            .append("option")
+            .text(function(d){return d;})
+            .attr("value",function(d){return d;});
+    }
+    
+    function  renderPriceRange(data){
+        price.selectAll("option")
+            .data(d3.map(data, function(d){return d.Price_Range;}).keys())
+            .enter()
+            .append("option")
+            .text(function(d){return d+" $" ;})
+            .attr("value",function (d){ return d;})
+    }
+    
+    function renderGraph(data){
+      
+        var xValue = function(d) { return d.stars;}, 
+        xScale = d3.scale.linear().range([0,width]).domain([0,5.2]),
+        xMap = function(d) {
+            return xScale(xValue(d));
+        }, 
+        xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+    
+// setup y axis
+    var yValue = function(d) { return d.sentiment;}, 
+        yScale = d3.scale.linear().range([height, 0]).domain([-1,1]),
+        yMap = function(d) { return yScale(yValue(d));}, 
+        yAxis = d3.svg.axis().scale(yScale).orient("left");
+//size scale:   
+    var SizeScale = d3.scale.linear()
+                .range([5,50]).domain([1,10]),
+        sizeValue = function(d){ return d.tips_count;},
+        sizeMap = function(d){return SizeScale(sizeValue(d))};
+    
+    var svg = d3.select("#scatter").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height/2 + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -8)
+      .style("text-anchor", "end")
+      .text("Stars");
+  // y-axis
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 8)
+      .style("text-anchor", "end")
+      .text("Sentiment");
+  // draw dots
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", function(d){return Math.sqrt(sizeMap(d)/Math.PI)})
+      .attr("cx", xMap)
+      .attr("cy", yMap)
+      .style("fill",function(d){ return color(cValue(d));})
+    .attr("opacity","0.6")
+      .on("click",function(d,i){alert(d.name);}); 
+    
+    var legend = svg.selectAll(".legend")
+        .data(color.domain())
+        .enter().append("g")            
+        .attr("class","legend")
+        .attr("transform",function(d,i){ return "translate(0," + i * 20 + ")";})
+    
+    //color squares:        
+    legend.append("rect")
+    .attr("x", width -18)
+    .attr("width",18)
+    .attr("height",18)
+    .style("fill",color);
+    
+    //legend text:
+    legend.append("text")
+    .attr("x",width - 24)
+    .attr("y", 9)
+    .attr("dy",".35em")
+    .style("text-anchor","end")
+    .text(function(d){ return d;})
+    
+     var selection = svg.selectAll(".dot")
+                .data(data, function(d){return d.name;})
+                .enter().append("circle")
+                       .on("click", function(d, i){ 
+                        alert(d.name)
+                })
+                    
+                .on('mouseenter', function(d,i) {
+                    d3.select("#tooltip").style({
+                        visibility: "visible",
+                        top: d3.event.clientY+5,
+                        left: d3.event.clientX+5,
+                        opacity:1
+                })
+                d3.select("#tooltip").text(d.name);
+                    highlight(d.name);
+                })
+                .on('mouseleave', function(d,i) {
+                    d3.select("#tooltip").style({
+                        visibility: "hidden",
+                        opacity:0
+                    })
+                    unhighlight();
+                                                    
+            });
+            
+            selection.exit().remove();
+        
+        
+   } 
+  
+    function onchange(){
+        
+        cat =d3.select('#select').property('value');
+        console.log(cat);
+        render(data);
+    }
+    
+});
+</script>
+</body>
+</html>
