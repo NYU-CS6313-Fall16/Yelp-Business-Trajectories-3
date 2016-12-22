@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+
+<style>
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+    
+     .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.0px;
+    }
+    
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script type = "text/javascript">
+var margin = {top: 50, right: 0, bottom: 70, left: 70},
+    width  = 900,
+    height = 600;
+    
+    
+// setup x axis
+var xValue = function(d) { return d.stars;}, 
+    xScale = d3.scale.linear().range([0, width]).domain([0,5]),
+    xMap = function(d) {
+        return xScale(xValue(d));
+    }, 
+    xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+
+// setup y axis
+var yValue = function(d) { return d.sentiment;}, 
+    yScale = d3.scale.linear().range([height, 0]).domain([-2,2]),
+    yMap = function(d) { return yScale(yValue(d));}, 
+    yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+
+// add the graph 
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    
+
+// add the tooltip area to the webpage
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+// load data
+    
+    var data = [];
+    
+d3.csv("temp_business.csv", function(error, result) {
+    data = result;
+  // change string (from CSV) into number format
+  data.forEach(function(d) {
+    d.stars = +d.stars;
+    d.sentiment = +d.sentiment;
+//    console.log(d);
+  });
+
+  
+  // x-axis
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height/2 + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("Stars");
+
+  // y-axis
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .style("text-anchor", "end")
+      .text("Sentiment");
+
+  // draw dots
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 3.5)
+      .attr("cx", xMap)
+      .attr("cy", yMap)
+
+});
+
+</script>
+</body>
+</html>
