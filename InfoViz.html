@@ -106,7 +106,7 @@ var SizeScale = d3.scale.linear()
     
 //color scale:
 var cValue = function(d){return d.broad_categories;},
-    color = d3.scale.category10();
+    color = d3.scale.category20();
 
 // add the tooltip area to the webpage
 var tooltip = d3.select("body").append("div")
@@ -293,7 +293,7 @@ function get_cloud(biz_id, biz)    {
             var fontScale = d3.scale.linear()
             .range([14,34]);
             
-            var cloud_colorScale = d3.scale.linear().domain([-1,0, 1]).range(['red','blue'])
+            var cloud_colorScale = d3.scale.linear().domain([-1,0, 1]).range(['sienna','magenta'])
                 
             d3.csv("business_words.csv", function(error,result) {
                 dataBiz = result;
@@ -358,6 +358,26 @@ function get_cloud(biz_id, biz)    {
                 .text(function(d){return d.text;});
             }
             
+            var col_legend = svg.select("#tip_area").selectAll(".col_legend")
+        .data(cloud_colorScale.domain())
+        .enter().append("g")            
+        .attr("class","col_legend")
+        .attr("transform",function(d,i){ return "translate(0," + i * 20 + ")";});
+                
+        //color squares:        
+    col_legend.append("rect")
+    .attr("x", width -28)
+    .attr("width",18)
+    .attr("height",18)
+    .style("fill",cloud_colorScale("red"));
+    
+    //legend text:
+    col_legend.append("text")
+    .attr("x",width)
+    .attr("y", 8)
+    .attr("dy",".35em")
+    .style("text-anchor","start")
+    .text(function(d){ return d;})        
         });
       }
   });        
