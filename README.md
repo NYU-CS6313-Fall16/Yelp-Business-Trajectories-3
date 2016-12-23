@@ -6,6 +6,6 @@
 
 Scatterplot and wordcloud to investigate the influence of user tips on Yelp business rating.  
 
-Video:
-Demo: 
-Final Paper: 
+Video: https://drive.google.com/file/d/0B2f0Vr8sYSLMMURfM0VjUG5TQWc/view
+
+Demonstration: https://nyu-cs6313-fall16.github.io/Yelp-Business-Trajectories-3/
