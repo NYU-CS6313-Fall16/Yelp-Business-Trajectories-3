@@ -9,3 +9,5 @@ Scatterplot and wordcloud to investigate the influence of user tips on Yelp busi
 Video: https://drive.google.com/file/d/0B2f0Vr8sYSLMMURfM0VjUG5TQWc/view
 
 Demonstration: https://nyu-cs6313-fall16.github.io/Yelp-Business-Trajectories-3/
+
+Report: https://github.com/NYU-CS6313-Fall16/Yelp-Business-Trajectories-3/blob/master/FinalReport.pdf
